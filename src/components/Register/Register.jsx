@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-// Checklist: "Register: el componente para el registro de los
-// usuarios con las variables de estado necesarias."
 export default function Register({ onRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Igual que en Login: Register solo avisa a App.jsx, no llama a
-    // auth.js directamente.
     onRegister(email, password);
   }
 
