@@ -1,7 +1,23 @@
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
+    this._token = null;
+  }
+
+  // Paso 3: "tendrás que agregar a tus solicitudes un encabezado
+  // Authorization: Bearer {token}, utilizando el token recibido por
+  // la solicitud de autenticación del usuario."
+  // App.jsx llama a esto justo después de un login exitoso (o al
+  // comprobar el token guardado al montar la app).
+  setToken(token) {
+    this._token = token;
+  }
+
+  _getHeaders() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${this._token}`,
+    };
   }
 
   _checkResponde(res) {
@@ -13,24 +29,21 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: this._getHeaders(),
     }).then(this._checkResponde);
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: this._getHeaders(),
     }).then(this._checkResponde);
   }
 
   updateUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        about: about,
-      }),
+      headers: this._getHeaders(),
+      body: JSON.stringify({ name, about }),
     }).then(this._checkResponde);
   }
 
@@ -41,42 +54,37 @@ class Api {
   addCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        link: link,
-      }),
+      headers: this._getHeaders(),
+      body: JSON.stringify({ name, link }),
     }).then(this._checkResponde);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._getHeaders(),
     }).then(this._checkResponde);
   }
 
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: this._getHeaders(),
     }).then(this._checkResponde);
   }
 
   unlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._getHeaders(),
     }).then(this._checkResponde);
   }
 
   updateAvatar(avatarUrl) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatarUrl,
-      }),
+      headers: this._getHeaders(),
+      body: JSON.stringify({ avatar: avatarUrl }),
     }).then(this._checkResponde);
   }
 
@@ -85,10 +93,8 @@ class Api {
   }
 }
 
+// Ya no ponemos un token fijo aquí: se asigna dinámicamente con
+// api.setToken(...) desde App.jsx, según quién haya iniciado sesión.
 export const api = new Api({
   baseUrl: "https://around-api.es.tripleten-services.com/v1",
-  headers: {
-    authorization: "027fa34d-e16a-44db-8a3e-5a490b831bf8",
-    "Content-Type": "application/json",
-  },
 });
