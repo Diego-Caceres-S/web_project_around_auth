@@ -18,20 +18,13 @@ function App() {
   const [cards, setCards] = useState([]);
   const [popup, setPopup] = useState(null);
 
-  // Checklist: "Se agregan nuevas variables de estado a los
-  // componentes: email, al componente App."
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  // Estado para la ventanita InfoTooltip (éxito/error de registro)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
 
-  // Checklist: "Al montar App, comprueba si existe un JWT."
-  // Paso 5: "Implementa localStorage para almacenar y acceder al
-  // token... En visitas repetidas, los usuarios no tendrían por qué
-  // iniciar sesión."
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (!jwt) return;
@@ -47,13 +40,7 @@ function App() {
         console.error(error);
         localStorage.removeItem("jwt");
       });
-    // Este efecto debe correr solo una vez, al montar la app.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Checklist: "La solicitud API de información sobre el usuario y el
-  // array de tarjetas se hace solo una vez." Se dispara cuando
-  // loggedIn pasa a true (login exitoso o token válido encontrado).
   useEffect(() => {
     if (!loggedIn) return;
 
@@ -81,8 +68,6 @@ function App() {
     setPopup(null);
   }
 
-  // Checklist: "Todas las solicitudes API se describen dentro del
-  // componente App." (esto ya lo tenías bien, se mantiene igual)
   function handleUpdateUser(data) {
     api
       .setUserInfo(data)
@@ -138,9 +123,6 @@ function App() {
       .catch((error) => console.error(error));
   }
 
-  // Checklist: "Cuando se llama al controlador onLogin(), el JWT se
-  // guarda." / "Tras una autorización correcta, el usuario será
-  // redirigido a /."
   function handleLogin(userEmail, password) {
     setLoginError("");
     authorize(userEmail, password)
@@ -157,8 +139,6 @@ function App() {
       });
   }
 
-  // Checklist: "InfoTooltip: informa al usuario si ha sido registrado
-  // exitosamente."
   function handleRegister(userEmail, password) {
     register(userEmail, password)
       .then(() => {
@@ -173,9 +153,6 @@ function App() {
       });
   }
 
-  // Checklist: "Cuando se llama al controlador onSignOut() el JWT se
-  // elimina." / "Tras una llamada exitosa al controlador onSignOut()
-  // se redireccionará al usuario a /signin."
   function handleSignOut() {
     localStorage.removeItem("jwt");
     api.setToken(null);
@@ -198,22 +175,16 @@ function App() {
         />
 
         <Routes>
-          {/* Instrucción: "/signup: para el registro de usuarios." */}
           <Route
             path="/signup"
             element={<Register onRegister={handleRegister} />}
           />
 
-          {/* Instrucción: "/signin: para la autorización de usuarios." */}
           <Route
             path="/signin"
             element={<Login onLogin={handleLogin} error={loginError} />}
           />
 
-          {/* Instrucción: "Toda la funcionalidad de tu aplicación
-              estará disponible únicamente para usuarios autorizados a
-              través de la ruta raíz /." Aquí va tu app original,
-              protegida por ProtectedRoute. */}
           <Route
             path="/"
             element={
@@ -234,8 +205,6 @@ function App() {
             }
           />
 
-          {/* Instrucción: "...independientemente de la ruta desde la
-              que accedió." */}
           <Route
             path="*"
             element={<Navigate to={loggedIn ? "/" : "/signin"} replace />}

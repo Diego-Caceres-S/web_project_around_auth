@@ -1,19 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-// Checklist: "Login: el componente para la autorización de usuarios
-// con las variables de estado necesarias."
-// "Se agregan nuevas variables de estado a los componentes: email y
-// password, a los componentes Login y Register."
 export default function Login({ onLogin, error }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Checklist: "Todas las solicitudes API se describen dentro del
-    // componente App." Por eso Login solo avisa (onLogin), no llama
-    // a auth.js directamente.
     onLogin(email, password);
   }
 

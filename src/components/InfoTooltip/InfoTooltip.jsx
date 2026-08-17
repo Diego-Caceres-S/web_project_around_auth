@@ -1,7 +1,3 @@
-// Checklist: "InfoTooltip: un componente de ventana modal que informa
-// al usuario si ha sido registrado exitosamente."
-// Íconos ajustados según las capturas de Figma: círculo con SOLO
-// borde (sin relleno), con el check/X del mismo color adentro.
 export default function InfoTooltip({ isOpen, isSuccess, onClose }) {
   if (!isOpen) return null;
 
@@ -39,8 +35,24 @@ export default function InfoTooltip({ isOpen, isSuccess, onClose }) {
             xmlns="http://www.w3.org/2000/svg"
           >
             <circle cx="45" cy="45" r="42" stroke="#FF5454" strokeWidth="3" />
-            <line x1="30" y1="30" x2="60" y2="60" stroke="#FF5454" strokeWidth="4" strokeLinecap="round" />
-            <line x1="60" y1="30" x2="30" y2="60" stroke="#FF5454" strokeWidth="4" strokeLinecap="round" />
+            <line
+              x1="30"
+              y1="30"
+              x2="60"
+              y2="60"
+              stroke="#FF5454"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <line
+              x1="60"
+              y1="30"
+              x2="30"
+              y2="60"
+              stroke="#FF5454"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
           </svg>
         )}
 
