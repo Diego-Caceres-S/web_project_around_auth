@@ -23,3 +23,40 @@
     margin: 0 0 0 7px;
   }
 }
+.header {
+  justify-content: space-between;
+}
+
+.header__link {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header__link:hover {
+  opacity: 0.6;
+}
+
+.header__user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__email {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+}
+
+@media screen and (max-width: 544px) {
+  .header__link,
+  .header__email {
+    font-size: 14px;
+  }
+}
